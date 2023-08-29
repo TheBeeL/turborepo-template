@@ -6,12 +6,14 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
-  "devDependencies": {
-    "@acme/tsconfig": "workspace:*",
-    "eslint": "^8.47.0",
+  "dependencies": {
+    "@acme/prettier-config": "^0.1.0",
+    "@turbo/gen": "^1.10.13",
     "prettier": "^3.0.2",
-    "turbo": "^1.10.13"
+    "turbo": "^1.10.13",
+    "typescript": "^5.2.2"
   },
   "packageManager": "pnpm@8.6.10",
-  "name": "boilerplate"
+  "name": "boilerplate",
+  "prettier": "@acme/prettier-config"
 }
