@@ -17,6 +17,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
+    "strictNullChecks": true,
     "target": "ES2017"
   },
   "exclude": ["node_modules", "build", "dist"]
