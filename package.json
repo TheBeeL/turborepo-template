@@ -15,5 +15,6 @@
     "typescript": "^5.2.2"
   },
   "packageManager": "pnpm@8.6.10",
-  "name": "boilerplate"
+  "name": "boilerplate",
+  "prettier": "@acme/prettier-config"
 }

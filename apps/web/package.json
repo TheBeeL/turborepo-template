@@ -17,6 +17,7 @@
   "devDependencies": {
     "@acme/eslint-config": "workspace:*",
     "@acme/tsconfig": "workspace:*",
+    "@acme/prettier-config": "workspace:*",
     "@next/eslint-plugin-next": "^13.4.19",
     "@types/node": "^17.0.12",
     "@types/react": "^18.0.22",
@@ -30,5 +31,6 @@
       "@acme/eslint-config/nextjs",
       "@acme/eslint-config/react"
     ]
-  }
+  },
+  "prettier": "@acme/prettier-config"
 }
