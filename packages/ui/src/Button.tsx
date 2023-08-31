@@ -2,8 +2,11 @@
 
 export function Button(): JSX.Element {
   return (
-    // eslint-disable-next-line no-alert
-    <button onClick={(): void => alert("booped")} type="button">
+    <button
+      onClick={(): void => alert("booped")}
+      type="button"
+      className="rounded border border-solid border-black bg-lime-200 p-3"
+    >
       Boop
     </button>
   );
