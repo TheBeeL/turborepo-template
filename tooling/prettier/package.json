@@ -1,7 +1,7 @@
 {
   "name": "@acme/prettier-config",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.mjs",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.1.0",
-    "@types/node": "^20.5.7",
+    "@types/node": "^17.0.12",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.5.3"
   },

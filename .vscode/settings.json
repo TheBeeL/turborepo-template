@@ -14,5 +14,10 @@
   "typescript.preferences.autoImportFileExcludePatterns": [
     "next/router.d.ts",
     "next/dist/client/router.d.ts"
-  ]
+  ],
+  "prettier.documentSelectors": [
+    "**/*.{js,jsx,ts,tsx}",
+    "**/*.{js,jsx,ts,tsx}.hbs"
+  ],
+  "prettier.configPath": "./tooling/prettier/index.mjs"
 }
