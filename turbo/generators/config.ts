@@ -49,42 +49,36 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
                 destination: "apps/{{ name }}",
                 base: "templates/nextjs",
                 templateFiles: "templates/nextjs/**/*",
+                globOptions: {
+                  dot: true,
+                },
               },
-              // {
-              //   type: "add",
-              //   path: "apps/{{ appName }}/package.json",
-              //   templateFile: "templates/nextjs/package.json.hbs",
-              // },
-              // {
-              //   type: "add",
-              //   path: "apps/{{ appName }}/tsconfig.json",
-              //   templateFile: "templates/nextjs/tsconfig.json.hbs",
-              // },
-              // {
-              //   type: "add",
-              //   path: "apps/{{ appName }}/next.config.js",
-              //   templateFile: "templates/nextjs/next.config.js.hbs",
-              // },
-              // {
-              //   type: "add",
-              //   path: "apps/{{ appName }}/app/layout.tsx",
-              //   templateFile: "templates/nextjs/app/layout.tsx.hbs",
-              // },
-              // {
-              //   type: "add",
-              //   path: "apps/{{ appName }}/app/page.tsx",
-              //   templateFile: "templates/nextjs/app/page.tsx.hbs",
-              // },
-              {
+              async (answers) => {
+                /**
+                 * Install deps and format everything
+                 */
+                if ("name" in answers && typeof answers.name === "string") {
+                  execSync(`pnpm manypkg fix --filter @acme/${answers.name}`, {
+                    stdio: "inherit",
+                  });
+                  execSync(
+                    `pnpm prettier --write apps/${answers.name}/src/** --list-different`,
+                  );
+                  execSync(`pnpm install --filter @acme/${answers.name}`);
+                  return "Package scaffolded";
+                }
+                return "Package not scaffolded";
+              },
+              /*               {
                 type: "add",
-                path: "apps/{{ appName }}/public/",
-              },
+                path: "apps/{{ name }}/public/",
+              }, */
             );
           }
         }
       }
       // throw new Error("Invalid type");
-      console.log(actions)
+      //console.log(actions);
       return actions;
     },
   });
@@ -157,6 +151,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         /**
          * Install deps and format everything
          */
+        execSync("pwd");
         if ("name" in answers && typeof answers.name === "string") {
           execSync("pnpm manypkg fix", {
             stdio: "inherit",
