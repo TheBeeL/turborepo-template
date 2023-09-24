@@ -58,7 +58,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
                  * Install deps and format everything
                  */
                 if ("name" in answers && typeof answers.name === "string") {
-                  execSync(`pnpm manypkg fix --filter @acme/${answers.name}`, {
+                  execSync(`pnpm manypkg fix`, {
                     stdio: "inherit",
                   });
                   execSync(
@@ -69,16 +69,10 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
                 }
                 return "Package not scaffolded";
               },
-              /*               {
-                type: "add",
-                path: "apps/{{ name }}/public/",
-              }, */
             );
           }
         }
       }
-      // throw new Error("Invalid type");
-      //console.log(actions);
       return actions;
     },
   });
