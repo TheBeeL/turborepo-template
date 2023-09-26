@@ -16,5 +16,10 @@
   },
   "packageManager": "pnpm@8.6.10",
   "name": "boilerplate",
-  "prettier": "@acme/prettier-config"
+  "prettier": "@acme/prettier-config",
+  "manypkg": {
+    "ignoredRules": [
+      "INTERNAL_MISMATCH"
+    ]
+  }
 }
