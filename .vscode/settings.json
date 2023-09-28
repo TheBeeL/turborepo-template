@@ -17,7 +17,11 @@
   ],
   "prettier.documentSelectors": [
     "**/*.{js,jsx,ts,tsx}",
-    "**/*.{js,jsx,ts,tsx}.hbs"
+    "**/*.{js,jsx,ts,tsx}.hbs",
+    "**/*.astro"
   ],
-  "prettier.configPath": "./tooling/prettier/index.mjs"
+  "prettier.configPath": "./tooling/prettier/index.mjs",
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
