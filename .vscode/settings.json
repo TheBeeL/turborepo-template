@@ -8,6 +8,13 @@
     { "pattern": "packages/*/" },
     { "pattern": "tooling/*/" }
   ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "astro",
+    "typescript",
+    "typescriptreact"
+  ],
   "tailwindCSS.experimental.configFile": "./tooling/tailwind/index.ts",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
