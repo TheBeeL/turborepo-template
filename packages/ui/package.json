@@ -7,11 +7,6 @@
   "files": [
     "dist/**"
   ],
-  "exports": {
-    ".": "./dist",
-    "./styles.css": "./dist/index.css"
-  },
-  "license": "MIT",
   "scripts": {
     "build": "tsup src/index.tsx --format esm,cjs --dts --external react",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
@@ -42,5 +37,8 @@
       "@acme/eslint-config/react"
     ]
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@acme/prettier-config",
+  "dependencies": {
+    "class-variance-authority": "^0.7.0"
+  }
 }
