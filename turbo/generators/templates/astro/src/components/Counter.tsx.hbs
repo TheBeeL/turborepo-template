@@ -1,0 +1,32 @@
+import { useState } from "react";
+
+import { Button, Header } from "@acme/ui";
+
+interface CounterProps {
+  children: JSX.Element;
+  count?: number;
+}
+
+const Counter = ({ children, count: initialCount = 0 }: CounterProps) => {
+  const [count, setCount] = useState(initialCount);
+  const add = () => setCount((i) => i + 1);
+  const subtract = () => setCount((i) => i - 1);
+
+  return (
+    <>
+      <Header text="asd" />
+      <div className="mt-2 grid grid-cols-3 place-items-center text-xl">
+        <Button intent="secondary" onClick={subtract}>
+          -
+        </Button>
+        <pre>{count}</pre>
+        <Button intent="primary" onClick={add}>
+          +
+        </Button>
+      </div>
+      <div className="text-center">{children}</div>
+    </>
+  );
+};
+
+export default Counter;
