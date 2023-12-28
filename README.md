@@ -14,10 +14,14 @@ npx create-turbo@latest
 
 This Turborepo includes the following packages/apps:
 
-### Apps and Packages
+### Apps
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
+- `docs`: a AstroJS Starglight app
+  - with Storybook of the ui package
+- `web`: a [Next.js](https://nextjs.org/) app
+
+### Packages
+
 - `ui`: a stub React component library shared by both `web` and `docs` applications
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
