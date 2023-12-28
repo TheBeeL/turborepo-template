@@ -46,7 +46,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         name: "appType",
         type: "list",
         message: "What type of app would you like to create?",
-        choices: ["NextJs", "Astro"],
+        choices: ["NextJs", "Astro", "Starlight"],
       },
       {
         type: "input",
@@ -84,6 +84,21 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
                 destination: "apps/{{ name }}",
                 base: "templates/astro",
                 templateFiles: "templates/astro/**/*",
+                globOptions: {
+                  dot: true,
+                },
+              },
+              { type: "installDependencies" },
+            );
+            return actions;
+          }
+          if (answers.appType === "Starlight") {
+            actions.push(
+              {
+                type: "addMany",
+                destination: "apps/{{ name }}",
+                base: "templates/starlight",
+                templateFiles: "templates/starlight/**/*",
                 globOptions: {
                   dot: true,
                 },
