@@ -1,17 +1,37 @@
 import { execSync } from "node:child_process";
 import type { PlopTypes } from "@turbo/gen";
 
-type PackageJson = {
-  dependencies?: Record<string, string>;
-};
-
-const genNextjsAction: PlopTypes.Actions = (answers) => {
-  if (!answers) return [];
-  const actions: PlopTypes.Actions = [];
-  return actions;
-};
+// type PlopAnswers = Parameters<PlopTypes.DynamicActionsFunction>[0] & {
+//   type: "app" | "package";
+//   appType?: "NextJs";
+//   name: string;
+// };
 
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
+  plop.setActionType("installDependencies", async (answers) => {
+    /**
+     * Install deps and format everything
+     */
+    if (
+      "name" in answers &&
+      typeof answers.name === "string" &&
+      "type" in answers &&
+      typeof answers.type === "string"
+    ) {
+      execSync(`pnpm manypkg fix`, {
+        stdio: "inherit",
+      });
+      execSync(`pnpm install --filter @acme/${answers.name}`);
+      if ("appType" in answers && answers.appType === "NextJs") {
+        execSync(
+          `pnpm prettier --write ${answers.type}s/${answers.name}/src/** --list-different`,
+        );
+      }
+      return "Package scaffolded";
+    }
+    return "Package not scaffolded";
+  });
+
   plop.setGenerator("new", {
     description: "Generate a new app or package for the Acme Monorepo",
     prompts: [
@@ -26,7 +46,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         name: "appType",
         type: "list",
         message: "What type of app would you like to create?",
-        choices: ["NextJs"],
+        choices: ["NextJs", "Astro", "Starlight"],
       },
       {
         type: "input",
@@ -53,110 +73,43 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
                   dot: true,
                 },
               },
-              async (answers) => {
-                /**
-                 * Install deps and format everything
-                 */
-                if ("name" in answers && typeof answers.name === "string") {
-                  execSync(`pnpm manypkg fix`, {
-                    stdio: "inherit",
-                  });
-                  execSync(
-                    `pnpm prettier --write apps/${answers.name}/src/** --list-different`,
-                  );
-                  execSync(`pnpm install --filter @acme/${answers.name}`);
-                  return "Package scaffolded";
-                }
-                return "Package not scaffolded";
-              },
+              { type: "installDependencies" },
             );
+            return actions;
+          }
+          if (answers.appType === "Astro") {
+            actions.push(
+              {
+                type: "addMany",
+                destination: "apps/{{ name }}",
+                base: "templates/astro",
+                templateFiles: "templates/astro/**/*",
+                globOptions: {
+                  dot: true,
+                },
+              },
+              { type: "installDependencies" },
+            );
+            return actions;
+          }
+          if (answers.appType === "Starlight") {
+            actions.push(
+              {
+                type: "addMany",
+                destination: "apps/{{ name }}",
+                base: "templates/starlight",
+                templateFiles: "templates/starlight/**/*",
+                globOptions: {
+                  dot: true,
+                },
+              },
+              { type: "installDependencies" },
+            );
+            return actions;
           }
         }
       }
       return actions;
     },
-  });
-  plop.setGenerator("init", {
-    description: "Generate a new package for the Acme Monorepo",
-    prompts: [
-      {
-        type: "input",
-        name: "name",
-        message:
-          "What is the name of the package? (You can skip the `@acme/` prefix)",
-      },
-      {
-        type: "input",
-        name: "deps",
-        message:
-          "Enter a space separated list of dependencies you would like to install",
-      },
-    ],
-    actions: [
-      (answers) => {
-        if ("name" in answers && typeof answers.name === "string") {
-          if (answers.name.startsWith("@acme/")) {
-            answers.name = answers.name.replace("@acme/", "");
-          }
-        }
-        return "Config sanitized";
-      },
-      {
-        type: "add",
-        path: "packages/{{ name }}/package.json",
-        templateFile: "templates/package.json.hbs",
-      },
-      {
-        type: "add",
-        path: "packages/{{ name }}/tsconfig.json",
-        templateFile: "templates/tsconfig.json.hbs",
-      },
-      {
-        type: "add",
-        path: "packages/{{ name }}/index.ts",
-        template: "export * from './src';",
-      },
-      {
-        type: "add",
-        path: "packages/{{ name }}/src/index.ts",
-        template: "export const name = '{{ name }}';",
-      },
-      {
-        type: "modify",
-        path: "packages/{{ name }}/package.json",
-        async transform(content, answers) {
-          if ("deps" in answers && typeof answers.deps === "string") {
-            const pkg = JSON.parse(content) as PackageJson;
-            for (const dep of answers.deps.split(" ").filter(Boolean)) {
-              const version = await fetch(
-                `https://registry.npmjs.org/-/package/${dep}/dist-tags`,
-              )
-                .then((res) => res.json())
-                .then((json) => json.latest);
-              if (!pkg.dependencies) pkg.dependencies = {};
-              pkg.dependencies[dep] = `^${version}`;
-            }
-            return JSON.stringify(pkg, null, 2);
-          }
-          return content;
-        },
-      },
-      async (answers) => {
-        /**
-         * Install deps and format everything
-         */
-        execSync("pwd");
-        if ("name" in answers && typeof answers.name === "string") {
-          execSync("pnpm manypkg fix", {
-            stdio: "inherit",
-          });
-          execSync(
-            `pnpm prettier --write packages/${answers.name}/** --list-different`,
-          );
-          return "Package scaffolded";
-        }
-        return "Package not scaffolded";
-      },
-    ],
   });
 }

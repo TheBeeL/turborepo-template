@@ -18,7 +18,8 @@
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
-    "target": "ES2017"
+    "target": "ES2017",
+    "verbatimModuleSyntax": true
   },
   "exclude": ["node_modules", "build", "dist"]
 }

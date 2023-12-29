@@ -1,0 +1,40 @@
+---
+// Component Imports
+// import Button from "@components/Button.astro";
+import Counter from "@components/Counter";
+
+import { Button, Header } from "@acme/ui";
+
+const counterProps = { count: 0 };
+
+// Full Astro Component Syntax:
+// https://docs.astro.build/core-concepts/astro-components/
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro + TailwindCSS</title>
+  </head>
+
+  <body>
+    <div class="grid place-items-center h-screen content-center">
+      <Header text="asd" client:visible />
+      <Button>Tailwind Button in Astro!</Button>
+      <a href="/markdown-page" class="p-4 underline"
+        >Markdown is also supported...</a
+      >
+      <a href="/markdown-x-page" class="p-4 underline"
+        >Markdown X is also supported...</a
+      >
+
+      <Counter {...counterProps} client:visible>
+        <h1>React component</h1>
+      </Counter>
+    </div>
+  </body>
+</html>
+

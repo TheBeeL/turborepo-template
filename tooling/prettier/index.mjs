@@ -1,6 +1,6 @@
 import { fileURLToPath } from "url";
 
-/** @typedef  {import("prettier").Config} PrettierConfig */
+/** @typedef {import("prettier").Config} PrettierConfig */
 /** @typedef {import("prettier-plugin-tailwindcss").PluginOptions} TailwindConfig */
 /** @typedef  {import("@ianvs/prettier-plugin-sort-imports").PluginConfig} SortImportsConfig */
 
@@ -9,6 +9,7 @@ const config = {
   plugins: [
     "@ianvs/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss",
+    "prettier-plugin-astro",
   ],
   tailwindConfig: fileURLToPath(
     new URL("../../tooling/tailwind/index.ts", import.meta.url),
@@ -28,6 +29,12 @@ const config = {
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
   importOrderTypeScriptVersion: "4.4.0",
   overrides: [
+    {
+      files: "*.astro",
+      options: {
+        parser: "astro",
+      },
+    },
     {
       files: ["*.ts.hbs", "*.tsx.hbs"],
       options: {
